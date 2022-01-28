@@ -76,7 +76,7 @@ int main(){
         getline(cin,msg);
         int len = msg.length();
 
-        // Forming a grid of string
+        // Forming a grid of string (Alternate way: just create a square martix acc. to the length of the msg)
         int col = ceil(sqrt(len));
         int row = sqrt(len);
         if(row*col<len)
