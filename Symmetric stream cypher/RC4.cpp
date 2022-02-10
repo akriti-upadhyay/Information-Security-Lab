@@ -13,37 +13,41 @@ void printVector(vector<int> v){
 int main(){
     while(1){
         // Input Plain Text
-        int ptSize;
-        cout<<"\nEnter the Size of Plain Text Array: \n";
-        cin>>ptSize;
-        vector<int> plainText(ptSize);
-        cout<<"\nEnter the Plain Text Array: \n";
+        string msg;
+        cout<<"\nEnter Plain Text: \n";
+        cin.ignore();
+        getline(cin, msg);
+
+        int ptSize = msg.size();
+        vector<int> plainTextArray(ptSize);
         for(int i=0; i<ptSize; i++){
-            int x;
-            cin>>x;
-            plainText[i] = x;
+            plainTextArray[i] = msg[i];
         }
         
         // Input Key
-        // size(key) = size(plainText)
-        int keySize;
+        string key;
+        cout<<"\nEnter Key: \n";
+        cin>>key;
+        int keySize = key.size();
+        // size(keyArray) = size(plainTextArray)
         vector<int> keyArray(ptSize);
-        cout<<"\nEnter the Key Array: \n";
         for(int i=0; i<ptSize; i++){
-            int x;
-            cin>>x;
-            keyArray[i] = x;
+            keyArray[i] = key[i%keySize];
         }
-        
-        cout<<"\nplainText:\n";
-        printVector(plainText);
-        cout<<"\nkeyArray:\n";
-        printVector(keyArray);
-        
+
+
 
         
         cout<<"_________________________________________________________________________________________";
         cout<<"\nBEHIND THE SCENES:\n";
+        
+
+        cout<<"\nPlain Text Array:\n";
+        printVector(plainTextArray);
+        cout<<"\nKey Array:\n";
+        printVector(keyArray);
+               
+
         // CREATING THE TABLE
         // S[] - state vector
         // T[] - key vector (Temporary array)
@@ -101,12 +105,17 @@ int main(){
         // PT XOR NewKey = CT
         cout<<"_________________________________________________________________________________________";
         cout<<"\nEncrypting......\n";
-        vector<int> cipherText(plainText.size());
-        for(int i=0; i<plainText.size(); i++){
-            cipherText[i] = plainText[i] ^ newKeyArray[i];
+        vector<int> cipherText(plainTextArray.size());
+        for(int i=0; i<plainTextArray.size(); i++){
+            cipherText[i] = plainTextArray[i] ^ newKeyArray[i];
         }
-        cout<<"\nCipher Text:\n";
+        cout<<"\nCipher Text Array:\n";
         printVector(cipherText);
+        string cipher = "";
+        for(int i=0; i<cipherText.size(); i++){
+            cipher += char(cipherText[i]);
+        }
+        cout<<"\nCipher Text: "<<cipher<<endl;
         
 
 
@@ -114,15 +123,25 @@ int main(){
         // CT XOR NewKey = PT
         cout<<"_________________________________________________________________________________________";
         cout<<"\nDecrypting......\n";
-        vector<int> decryptedPlainText(cipherText.size());
+        vector<int> decryptedPlainTextArray(cipherText.size());
         for(int i=0; i<cipherText.size(); i++){
-            decryptedPlainText[i] = cipherText[i] ^ newKeyArray[i];
+            decryptedPlainTextArray[i] = cipherText[i] ^ newKeyArray[i];
         }
-        cout<<"\nPlain text:\n";
-        printVector(decryptedPlainText);
+        cout<<"\nPlain text Array (After Decryption):\n";
+        printVector(decryptedPlainTextArray);
+        string decrypt = "";
+        for(int i=0; i<decryptedPlainTextArray.size(); i++){
+            decrypt += char(decryptedPlainTextArray[i]);
+        }
+        cout<<"\nDecrypted Plain Text: "<<decrypt;
         
+        cout<<"\n_________________________________________________________________________________________";
+        cout<<"\n\nOriginal Message: "<<msg;
+        cout<<"\nEncrypted Message: "<<cipher;
+        cout<<"\nDecrypted Message: "<<decrypt;
+
         char choice;
-        cout<<"\nDo you want to continue? (y/n)\n";
+        cout<<"\n\nDo you want to continue? (y/n)\n";
         cin>>choice;
         if(choice == 'n' || choice == 'N')
             break;
