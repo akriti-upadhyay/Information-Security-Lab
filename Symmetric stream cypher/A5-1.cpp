@@ -135,7 +135,7 @@ void registerFunctioning(vector<int> &x, vector<int> &y, vector<int> &z, const i
 
 
 
-// Converting ASCII (decimal number) to 8-bit Binary string
+// Converting ASCII (decimal number) to 7-bit Binary string
 string asciiToBin(int num){
     string bin = "";
     for(int i = 1<<6; i>0; i=i/2){
