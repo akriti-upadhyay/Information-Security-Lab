@@ -86,6 +86,7 @@ string encryption(string plain, int p, int q)
             // P^e
             for(int j=0; j<e; j++)
                 z = ((int)res[i]) * z;
+            // store in P to diffentiate b/w numbers like 7, 33, where 7%26 = 33%26 = 7 (storing 1 in P, if z%n > 26 | storing 0, if z%n < 26)
             P.push_back((z % n)/26);
             result.push_back((z % n)%26);
         }
@@ -120,6 +121,7 @@ string decryption(string cipher)
     for(int i=0; i<cipher.length(); i++)
     {
         if(cipher[i]>64 && cipher[i]<91)
+            // add P[i]*26 if > 26
             res.push_back((cipher[i]-65) + (P[i]*26));
         if(cipher[i] == ' ')
             res.push_back(' ');
